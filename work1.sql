@@ -71,6 +71,29 @@
       from student
       where tot_cred > 100;
 --3.4
+  --a
+		select distinct count(name)
+		from person natural join participated natural join accident
+		where accident.date = '2009';
+  --b
+		insert into accident values ('2016551118','04-28-2018','xtu');
+  --c
+		delete from car
+			where license in (select license
+												from owns
+												where driver_id in (select driver_id
+																						from person
+																						where name = 'John Smitch')
+												and license in (select license
+																				from car
+																				where model = 'Mazda'););
+		delete from owns
+			where driver_id in (select driver_id
+													from person
+													where name = 'John Smitch')
+			and license in (select license
+											from car
+											where model = 'Mazda');
 	
 --3.5
 	--a
