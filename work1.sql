@@ -19,8 +19,8 @@
 		select customer_name
 		from depositor
 		where account_number not in(select account_number
-									from borrower natural join loan
-									where loan.amount <> 0);
+															  from borrower natural join loan
+																where loan.amount <> 0);
 	--b
 		select customer_name
 		from customer
