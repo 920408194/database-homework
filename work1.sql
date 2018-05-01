@@ -1,5 +1,77 @@
-
-
+--3.1
+  --a
+    select title
+    from course
+    where dept_name = 'Comp. Sci.'
+    and credits = 3;
+  --b
+    select distinct s.name,s.id
+    from student s,takes,teaches,instructor
+    where instructor.name = 'Einstein'
+    and instructor.id = teaches.id
+    and teaches.course_id = takes.course_id
+    and takes.id = s.id;
+  --c
+    select name,salary
+    from instructor
+    where salary in (select max(salary)
+                     from instructor);
+  --d
+    --c中已经找出
+  --e 
+    select count(id),title
+    from takes natural join course
+    where takes.semester = 'Fall'
+    and year = '2009'
+    group by title;
+  --f
+    select max(num)
+    from(select count(id) as num,title
+         from takes natural join course
+         where takes.semester = 'Fall'
+         and year = '2009'
+         group by title);
+  --g
+    select title,num
+    from(select count(id) as num,title
+         from takes natural join course
+         where takes.semester = 'Fall'
+         and year = '2009'
+         group by title)
+    where num in (select max(num)
+                  from(select count(id) as num,title
+                       from takes natural join course
+                       where takes.semester = 'Fall'
+                       and year = '2009'
+                       group by title));
+--3.2
+  --a
+    select sum(points*credits)
+    from grade_points natural join takes natural join course
+    where takes.id = 12345;
+  --b
+    select sum(points*credits)/sum(credits)
+    from grade_points natural join takes natural join course
+    where takes.id = 12345;    
+  --c
+    select id,sum(points*credits)/sum(credits) as GPA
+    from grade_points natural join takes natural join course    
+    group by id;
+--3.3
+  --a
+    update instructor
+    set salary = salary * 1.1
+    where dept_name;
+  --b
+    delete from course
+    where course not in section;
+  --c
+    insert into instructor
+      select id,name,dept_name,10000
+      from student
+      where tot_cred > 100;
+--3.4
+	
 --3.5
 	--a
 		select *,elt(Interval(score,0,40,60,80),'F','C','B','A') as level --此处用到了我在网上找的elt和interval函数
