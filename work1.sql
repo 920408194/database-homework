@@ -1,3 +1,5 @@
+
+
 --3.5
 	--a
 		select *,elt(Interval(score,0,40,60,80),'F','C','B','A') as level --此处用到了我在网上找的elt和interval函数
