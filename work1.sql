@@ -364,3 +364,18 @@
       (select count(*) from member);
 --3.23
   --
+--3.24
+    select dept_name
+    from (
+      select dept_name,sum(salary) as sum_salary
+      from instructor
+      group by dept_name
+    )
+    where sum_salary >= avg_salary in (
+      select avg(salary) as avg_salary
+      from (
+        select dept_name,sum(salary) as sum_salary
+        from instructor
+        group by dept_name  
+      )
+    );
